@@ -2,105 +2,409 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mini Bank</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { font-family: Arial, sans-serif; }
-    header { background: #f8f9fa; padding: 50px 0; text-align: center; }
-    section h2 { color: #0d6efd; margin-bottom: 30px; }
-    .card { transition: transform 0.3s; }
-    .card:hover { transform: scale(1.05); }
-    footer { background: #0d6efd; color: white; padding: 20px; text-align: center; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    header {
+      background: #FFDD2D;
+      color: #000000;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #f6f6f6;
+      border-bottom: 1px solid #ddd;
+    }
+
+    nav button {
+      background: #FFDD2D;
+      color: #000000;
+      border: none;
+      margin: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      background: #f0c800;
+    }
+
+    section {
+      display: none;
+      padding: 20px;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    .card {
+      background: #f6f6f6;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .btn {
+      background: #FFDD2D;
+      color: #000000;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 6px;
+      font-weight: bold;
+    }
+
+    .btn:hover {
+      background: #f0c800;
+    }
+
+    .output {
+      margin-top: 10px;
+      padding: 10px;
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 200px;
+    }
+
+    /* Игра */
+    #gameCanvas {
+      background: #eaeaea;
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #000;
+    }
+
+    #gameControls {
+      text-align: center;
+      margin: 10px;
+    }
+
+    #gameInfo {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    #gameInfo img {
+      width: 30px;
+      vertical-align: middle;
+      margin: 0 5px;
+    }
   </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-      <a class="navbar-brand" href="#">Mini Bank</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#products">Продукты</a></li>
-          <li class="nav-item"><a class="nav-link" href="#calculator">Калькулятор</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Контакты</a></li>
-        </ul>
-      </div>
-    </div>
+
+  <header>🌐 Mini Bank</header>
+
+  <nav>
+    <button onclick="showSection('tools')">Финансовые инструменты</button>
+    <button onclick="showSection('kids')">Детские функции</button>
+    <button onclick="showSection('game')">Игровые элементы</button>
   </nav>
 
-  <header>
-    <h1>Добро пожаловать в Mini Bank</h1>
-    <p>Простые кредиты, депозиты и удобные онлайн-сервисы</p>
-  </header>
+  <!-- Финансовые инструменты -->
+  <section id="tools" class="active">
+    <div class="card">
+      <h3>Контроль расходов</h3>
+      <input type="number" id="limit" placeholder="Введите лимит ₽"><br>
+      <input type="number" id="spent" placeholder="Сколько потрачено ₽"><br>
+      <button class="btn" onclick="checkLimit()">Проверить</button>
+      <div class="output" id="limitResult"></div>
+    </div>
 
-  <section id="products" class="container my-5">
-    <h2>Наши продукты</h2>
-    <div class="row">
-      <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title">Кредит наличными</h5>
-            <p class="card-text">До 1 000 000 ₽ на любые цели.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title">Вклад</h5>
-            <p class="card-text">Доход до 7% годовых.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body text-center">
-            <h5 class="card-title">Карты</h5>
-            <p class="card-text">Удобные дебетовые и кредитные карты.</p>
-          </div>
-        </div>
-      </div>
+    <div class="card">
+      <h3>Автоматическое бюджетирование (конверты)</h3>
+      <button class="btn" onclick="calcEnvelopes()">Рассчитать</button>
+      <div class="output" id="envelopeResult"></div>
+    </div>
+
+    <div class="card">
+      <h3>Управление подписками</h3>
+      <p>Ваши активные подписки: Netflix, YouTube Premium, Spotify</p>
+      <button class="btn" onclick="showSubs()">Показать уведомления</button>
+      <div class="output" id="subsResult"></div>
+    </div>
+
+    <div class="card">
+      <h3>Временные карты</h3>
+      <button class="btn" onclick="genCard()">Создать карту</button>
+      <div class="output" id="cardResult"></div>
     </div>
   </section>
 
-  <section id="calculator" class="container my-5">
-    <h2>Калькулятор кредита</h2>
-    <div class="mb-3">
-      <label for="amount" class="form-label">Сумма кредита ₽</label>
-      <input type="number" class="form-control" id="amount" value="100000">
+  <!-- Детские функции -->
+  <section id="kids">
+    <div class="card">
+      <h3>Копилка на мечту</h3>
+      <input type="text" id="dream" placeholder="Цель (например: приставка)"><br>
+      <input type="number" id="dreamGoal" placeholder="Сколько нужно ₽"><br>
+      <input type="number" id="dreamSaved" placeholder="Сколько уже накоплено ₽"><br>
+      <button class="btn" onclick="calcDream()">Посчитать</button>
+      <div class="output" id="dreamResult"></div>
     </div>
-    <div class="mb-3">
-      <label for="months" class="form-label">Срок (мес.)</label>
-      <input type="number" class="form-control" id="months" value="12">
+
+    <div class="card">
+      <h3>Заработок</h3>
+      <p>Выполните задания и получите награду.</p>
+      <button class="btn" onclick="addEarnings()">Помог в доме (+100 ₽)</button>
+      <button class="btn" onclick="addEarnings()">Пройден тест (+150 ₽)</button>
+      <div class="output" id="earningsResult">Баланс: 0 ₽</div>
     </div>
-    <button class="btn btn-primary" onclick="calculateLoan()">Рассчитать</button>
-    <p class="mt-3" id="result"></p>
+
+    <div class="card">
+      <h3>Учись и получай</h3>
+      <p>Вопрос: что лучше — тратить всё сразу или откладывать часть?</p>
+      <button class="btn" onclick="quiz(true)">Откладывать часть</button>
+      <button class="btn" onclick="quiz(false)">Тратить всё</button>
+      <div class="output" id="quizResult"></div>
+    </div>
   </section>
 
-  <section id="contact" class="container my-5">
-    <h2>Контакты</h2>
-    <p>Email: info@minibank.ru</p>
-    <p>Телефон: +7 900 123-45-67</p>
-  </section>
+  <!-- Игровые элементы -->
+  <section id="game">
+    <div class="card">
+      <h3>Игра: Беги и копи деньги</h3>
+      <div id="gameControls">
+        <button class="btn" onclick="startGame()">▶ Старт</button>
+        <button class="btn" onclick="jump()">⤴ Прыжок</button>
+        <button class="btn" onclick="stopGame()">⏹ Завершить</button>
+      </div>
+      <canvas id="gameCanvas" width="600" height="200"></canvas>
+      <div class="output" id="gameBalance">Баланс: 100 ₽</div>
+      <div id="gameInfo">
+        <p>
+          <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+          Бандит — забирает деньги  
+          &nbsp;&nbsp;|&nbsp;&nbsp;  
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135706.png">
+          Банк — добавляет +10%
+        </p>
+        <p>Управление: пробел или кнопка «Прыжок»</p>
+      </div>
+    </div>
 
-  <footer>
-    &copy; 2025 Mini Bank. Все права защищены.
-  </footer>
+    <div class="card">
+      <h3>Денежный помощник-бот</h3>
+      <input type="text" id="botQuestion" placeholder="Задайте вопрос...">
+      <button class="btn" onclick="askBot()">Спросить</button>
+      <div class="output" id="botResult"></div>
+    </div>
+  </section>
 
   <script>
-    function calculateLoan() {
-      const amount = Number(document.getElementById('amount').value);
-      const months = Number(document.getElementById('months').value);
-      const rate = 0.12;
-      const monthlyRate = rate / 12;
-      const payment = amount * monthlyRate / (1 - Math.pow(1 + monthlyRate, -months));
-      document.getElementById('result').textContent = `Ежемесячный платёж: ${payment.toFixed(2)} ₽`;
+    // Переключение вкладок
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
     }
-  </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    // Контроль расходов
+    function checkLimit() {
+      const limit = +document.getElementById("limit").value;
+      const spent = +document.getElementById("spent").value;
+      let msg = "";
+      if (!limit || !spent) msg = "Введите лимит и сумму!";
+      else if (spent < limit * 0.9) msg = "Все хорошо, траты в норме ✅";
+      else if (spent < limit) msg = "Внимание! Вы близки к лимиту ⚠️";
+      else msg = "Лимит превышен ❌";
+      document.getElementById("limitResult").innerText = msg;
+    }
+
+    // Конверты
+    function calcEnvelopes() {
+      const salary = 20000;
+      const vacation = Math.round(salary * 0.15);
+      const savings = salary - vacation;
+      document.getElementById("envelopeResult").innerText =
+        `Отложено на отпуск: ${vacation} ₽, на сбережения: ${savings} ₽`;
+    }
+
+    // Подписки
+    function showSubs() {
+      document.getElementById("subsResult").innerText =
+        "Через 3 дня спишется 599 ₽ за Netflix!";
+    }
+
+    // Временная карта
+    function genCard() {
+      const num = "**** **** **** " + Math.floor(1000 + Math.random() * 9000);
+      document.getElementById("cardResult").innerText = "Создана временная карта: " + num;
+    }
+
+    // Копилка
+    function calcDream() {
+      const goal = +document.getElementById("dreamGoal").value;
+      const saved = +document.getElementById("dreamSaved").value;
+      const dream = document.getElementById("dream").value;
+      const left = goal - saved;
+      document.getElementById("dreamResult").innerText =
+        saved >= goal ? `Поздравляем! Цель "${dream}" достигнута 🎉` :
+        `Осталось накопить: ${left} ₽`;
+    }
+
+    // Заработок
+    let earnings = 0;
+    function addEarnings() {
+      earnings += Math.floor(100 + Math.random()*100);
+      document.getElementById("earningsResult").innerText = `Баланс: ${earnings} ₽`;
+    }
+
+    // Викторина
+    function quiz(correct) {
+      document.getElementById("quizResult").innerText =
+        correct ? "Правильно! Получаете 50 баллов 🎉" : "Неверно! Попробуйте снова.";
+    }
+
+    // Бот
+    function askBot() {
+      const q = document.getElementById("botQuestion").value.toLowerCase();
+      let answer = "Я не понял вопрос 🤔";
+      if (q.includes("я люблю тебя")) answer = "я тебя тоже люблю симпотяшка моя ❤️❤️❤️ (Это адресовано только Сабрине!!!)";
+      else if (q.includes("накопить")) answer = "Лучше откладывать 20% дохода каждый месяц.";
+      else if (q.includes("500")) answer = "Совет: отложите 200 ₽, остальное на еду.";
+      else if (q.includes("фастфуд")) answer = "Сократите походы и готовьте дома.";
+      document.getElementById("botResult").innerText = answer;
+    }
+
+    // ---- ИГРА "Беги и копи деньги" ----
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let player, obstacles, balance, frame, gameRunning, gameLoop;
+
+    function initGame() {
+      player = { x: 50, y: 150, size: 30, vy: 0, jumping: false };
+      obstacles = [];
+      balance = 100;
+      frame = 0;
+      gameRunning = true;
+      document.getElementById("gameBalance").innerText = "Баланс: " + balance + " ₽";
+    }
+
+    function drawPlayer() {
+      ctx.fillStyle = "#000";
+      ctx.fillRect(player.x, player.y, player.size, player.size);
+    }
+
+    function drawObstacle(obs) {
+      if (obs.type === "bandit") {
+        ctx.fillStyle = "red";
+        ctx.fillRect(obs.x, obs.y, obs.size, obs.size);
+      } else {
+        ctx.fillStyle = "#FFDD2D";
+        ctx.fillRect(obs.x, obs.y, obs.size, obs.size);
+      }
+    }
+
+    function updateGame() {
+      if (!gameRunning) return;
+
+      frame++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // игрок
+      player.y += player.vy;
+      player.vy += 1; // гравитация
+      if (player.y > 150) {
+        player.y = 150;
+        player.vy = 0;
+        player.jumping = false;
+      }
+      drawPlayer();
+
+      // новые препятствия
+      if (frame % 120 === 0) {
+        const type = Math.random() < 0.5 ? "bandit" : "bank";
+        obstacles.push({ x: 600, y: 150, size: 30, type });
+      }
+
+      // движение препятствий
+      obstacles.forEach(obs => {
+        obs.x -= 5;
+        drawObstacle(obs);
+
+        // столкновение
+        if (
+          player.x < obs.x + obs.size &&
+          player.x + player.size > obs.x &&
+          player.y < obs.y + obs.size &&
+          player.y + player.size > obs.y
+        ) {
+          if (obs.type === "bandit") {
+            balance -= Math.max(100, Math.floor(balance * 0.2));
+          } else {
+            balance += Math.floor(balance * 0.1);
+          }
+          obstacles = obstacles.filter(o => o !== obs);
+        }
+      });
+
+      // фильтр вышедших за экран
+      obstacles = obstacles.filter(obs => obs.x + obs.size > 0);
+
+      // вывод баланса
+      document.getElementById("gameBalance").innerText = "Баланс: " + balance + " ₽";
+
+      if (balance <= 0) {
+        ctx.fillStyle = "black";
+        ctx.font = "20px Arial";
+        ctx.fillText("Игра окончена! Баланс обнулился.", 150, 100);
+        gameRunning = false;
+        return;
+      }
+
+      gameLoop = requestAnimationFrame(updateGame);
+    }
+
+    function jump() {
+      if (player && !player.jumping) {
+        player.vy = -15;
+        player.jumping = true;
+      }
+    }
+
+    function startGame() {
+      initGame();
+      cancelAnimationFrame(gameLoop);
+      updateGame();
+    }
+
+    function stopGame() {
+      gameRunning = false;
+      cancelAnimationFrame(gameLoop);
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.fillText("Игра завершена.", 200, 100);
+    }
+
+    // прыжок по пробелу
+    document.addEventListener("keydown", e => {
+      if (e.code === "Space") jump();
+    });
+  </script>
 </body>
 </html>
